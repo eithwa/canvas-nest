@@ -223,11 +223,17 @@
             value: function() {
                 var e = this;
                 d(this.el, function() {
-                    e.canvas.width = e.el.clientWidth, e.canvas.height = e.el.clientHeight
-                }), this.onmousemove = window.onmousemove, window.onmousemove = function(t) {
-                    e.current.x = t.clientX - e.el.offsetLeft + document.scrollingElement.scrollLeft, e.current.y = t.clientY - e.el.offsetTop + document.scrollingElement.scrollTop, e.onmousemove && e.onmousemove(t)
+                    e.canvas.width = e.el.clientWidth, 
+                    e.canvas.height = e.el.clientHeight
+                }), 
+                this.onmousemove = window.onmousemove, window.onmousemove = function(t) {
+                    e.current.x = t.clientX - e.el.offsetLeft + document.scrollingElement.scrollLeft, 
+                    e.current.y = t.clientY - e.el.offsetTop + document.scrollingElement.scrollTop, 
+                    e.onmousemove && e.onmousemove(t)
                 }, this.onmouseout = window.onmouseout, window.onmouseout = function() {
-                    e.current.x = null, e.current.y = null, e.onmouseout && e.onmouseout()
+                    e.current.x = null, 
+                    e.current.y = null, 
+                    e.onmouseout && e.onmouseout()
                 }
             }
         }, {
@@ -263,7 +269,21 @@
                     d = void 0,
                     v = void 0;
                 r.forEach(function(r, f) {
-                    for (r.x += r.xa, r.y += r.ya, r.xa *= r.x > n || r.x < 0 ? -1 : 1, r.ya *= r.y > o || r.y < 0 ? -1 : 1, t.fillStyle = "rgba(" + e.c.pointColor + ")", t.fillRect(r.x - .5, r.y - .5, 1, 1), u = f + 1; u < a.length; u++) null !== (s = a[u]).x && null !== s.y && (l = r.x - s.x, d = r.y - s.y, (v = l * l + d * d) < s.max && (s === i && v >= s.max / 2 && (r.x -= .03 * l, r.y -= .03 * d), c = (s.max - v) / s.max, t.beginPath(), t.lineWidth = c / 2, t.strokeStyle = "rgba(" + e.c.color + "," + (c + .2) + ")", t.moveTo(r.x, r.y), t.lineTo(s.x, s.y), t.stroke()))
+                    for (r.x += r.xa, 
+                        r.y += r.ya, 
+                        r.xa *= r.x > n ||
+                         r.x < 0 ? -1 : 1, r.ya *= r.y > o ||
+                          r.y < 0 ? -1 : 1, t.fillStyle = "rgba(" + e.c.pointColor + ")", 
+                          t.fillRect(r.x - .5, r.y - .5, 1, 1), u = f + 1; u < a.length; 
+                          u++) 
+                          null !== (s = a[u]).x &&
+                           null !== s.y && 
+                           (l = r.x - s.x, d = r.y - s.y, (v = l * l + d * d) < s.max && 
+                           (s === i && v >= s.max / 1.02 && (r.x -= .03 * l, r.y -= .03 * d)&&(r.xa *=-1, r.ya *= -1), 
+                           c = (s.max - v) / s.max, t.beginPath(), t.lineWidth = c / 2,
+                            // t.strokeStyle = "rgba(" + e.c.color + "," + (c + .2) + ")",
+                            t.strokeStyle = "rgba(" +(c)*155+","+(1-c)*100+","+255 + "," + (c + .2) + ")",
+                             t.moveTo(r.x, r.y), t.lineTo(s.x, s.y), t.stroke()))
                 }), this.requestFrame(this.drawCanvas)
             }
         }, {
