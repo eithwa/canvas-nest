@@ -262,29 +262,44 @@
                     r = this.points,
                     a = this.all;
                 t.clearRect(0, 0, n, o);
-                var s = void 0,
-                    u = void 0,
-                    c = void 0,
-                    l = void 0,
-                    d = void 0,
-                    v = void 0;
                 r.forEach(function(r, f) {
-                    for (r.x += r.xa, 
-                        r.y += r.ya, 
-                        r.xa *= r.x > n ||
-                         r.x < 0 ? -1 : 1, r.ya *= r.y > o ||
-                          r.y < 0 ? -1 : 1, t.fillStyle = "rgba(" + e.c.pointColor + ")", 
-                          t.fillRect(r.x - .5, r.y - .5, 1, 1), u = f + 1; u < a.length; 
-                          u++) 
-                          null !== (s = a[u]).x &&
-                           null !== s.y && 
-                           (l = r.x - s.x, d = r.y - s.y, (v = l * l + d * d) < s.max && 
-                           (s === i && v >= s.max / 1.02 && (r.x -= .03 * l, r.y -= .03 * d)&&(r.xa *=-1, r.ya *= -1), 
-                           c = (s.max - v) / s.max, t.beginPath(), t.lineWidth = c / 2,
-                            // t.strokeStyle = "rgba(" + e.c.color + "," + (c + .2) + ")",
-                            t.strokeStyle = "rgba(" +(c)*155+","+(1-c)*100+","+255 + "," + (c + .2) + ")",
-                             t.moveTo(r.x, r.y), t.lineTo(s.x, s.y), t.stroke()))
-                }), this.requestFrame(this.drawCanvas)
+                    r.x += r.xa;
+                    r.y += r.ya;
+                    r.xa *= (r.x > n || r.x < 0) ? -1 : 1;
+                    r.ya *= (r.y > o || r.y < 0) ? -1 : 1;
+                    
+                    t.fillStyle = "rgba(" + e.c.pointColor + ")";
+                    t.fillRect(r.x - .5, r.y - .5, 1, 1);
+                
+                    for (u = f + 1; u < a.length; u++) {
+                        var s = a[u];
+                        if (null !== s.x && null !== s.y) {
+                            var l = r.x - s.x,
+                                d = r.y - s.y,
+                                v = l * l + d * d;
+                            if (v < s.max * 1.5) {
+                                if (s === i && v >= s.max) {
+                                    r.x -= .03 * l;
+                                    r.y -= .03 * d;
+                                    r.xa *= -1;
+                                    r.ya *= -1;
+                                }
+                                var c = (s.max - v) / s.max,
+                                    color = Math.round(c * 155),
+                                    color2 = Math.round((1 - c) * 155),
+                                    alpha = c + .2;
+                                t.beginPath();
+                                t.lineWidth = c / 2;
+                                t.strokeStyle = "rgba(" + color + "," + color2 + "," + 255 + "," + alpha + ")";
+                                t.moveTo(r.x, r.y);
+                                t.lineTo(s.x, s.y);
+                                t.stroke();
+                            }
+                        }
+                    }
+                });
+                
+                this.requestFrame(this.drawCanvas);
             }
         }, {
             key: "destroy",
